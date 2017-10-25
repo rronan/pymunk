@@ -336,6 +336,14 @@ struct cpDampedSpring {
 	cpFloat jAcc;
 };
 
+struct cpGravitation {
+	cpConstraint constraint;
+	cpFloat gravitationCoef;
+	cpGravitationForceFunc gravitationForceFunc;
+	
+	cpFloat jAcc;
+};
+
 struct cpDampedRotarySpring {
 	cpConstraint constraint;
 	cpFloat restAngle;

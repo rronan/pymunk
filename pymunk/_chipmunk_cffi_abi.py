@@ -36,6 +36,7 @@ h = """
     typedef struct cpPivotJoint cpPivotJoint;
     typedef struct cpGrooveJoint cpGrooveJoint;
     typedef struct cpDampedSpring cpDampedSpring;
+    typedef struct cpGravitation cpGravitation;
     typedef struct cpDampedRotarySpring cpDampedRotarySpring;
     typedef struct cpRotaryLimitJoint cpRotaryLimitJoint;
     typedef struct cpRatchetJoint cpRatchetJoint;
@@ -798,6 +799,29 @@ h = """
     cpDampedSpringForceFunc cpDampedSpringGetSpringForceFunc(const cpConstraint *constraint);
     /// Set the damping of the spring.
     void cpDampedSpringSetSpringForceFunc(cpConstraint *constraint, cpDampedSpringForceFunc springForceFunc);
+    
+
+    ///////////////////////////////////////////
+    //cpGravitation.h
+    ///////////////////////////////////////////
+
+    /// Check if a constraint is a slide joint.
+    cpBool cpConstraintIsGravitation(const cpConstraint *constraint);
+    
+    /// Function type used for gravitational force callbacks.
+    typedef cpFloat (*cpGravitationForceFunc)(cpConstraint *gravity, cpFloat dist);
+    
+    /// Allocate a gravitational force.
+    cpGravitation* cpGravitationAlloc(void);
+    /// Initialize a gravitational force.
+    cpGravitation* cpGravitationInit(cpGravitation *joint, cpBody *a, cpBody *b, cpFloat gravitationCoef);
+    /// Allocate and initialize a gravitational force.
+    cpConstraint* cpGravitationNew(cpBody *a, cpBody *b, cpFloat gravitationCoef);
+    
+    /// Get the gravitational constant.
+    cpFloat cpGravitationGetCoef(const cpConstraint *constraint);
+    /// Set the gravitational constant.
+    void cpGravitationSetCoef(cpConstraint *constraint, cpFloat gc);
     
 
     ///////////////////////////////////////////

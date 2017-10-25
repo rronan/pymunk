@@ -93,6 +93,7 @@ typedef struct cpSlideJoint cpSlideJoint;
 typedef struct cpPivotJoint cpPivotJoint;
 typedef struct cpGrooveJoint cpGrooveJoint;
 typedef struct cpDampedSpring cpDampedSpring;
+typedef struct cpGravitation cpGravitation;
 typedef struct cpDampedRotarySpring cpDampedRotarySpring;
 typedef struct cpRotaryLimitJoint cpRotaryLimitJoint;
 typedef struct cpRatchetJoint cpRatchetJoint;

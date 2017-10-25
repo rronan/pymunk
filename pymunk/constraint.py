@@ -55,7 +55,7 @@ __docformat__ = "reStructuredText"
 
 __all__ = [
     "Constraint", "PinJoint", "SlideJoint", "PivotJoint", "GrooveJoint",
-    "DampedSpring", "DampedRotarySpring", "RotaryLimitJoint", "RatchetJoint",
+    "DampedSpring", "DampedRotarySpring", "Gravitation", "RotaryLimitJoint", "RatchetJoint",
     "GearJoint", "SimpleMotor"
     ]
 
@@ -312,9 +312,9 @@ class GrooveJoint(Constraint):
         """
         self._constraint = ffi.gc(
             cp.cpGrooveJointNew(
-                a._body, b._body, 
-                tuple(groove_a), tuple(groove_b), 
-                tuple(anchor_b)), 
+                a._body, b._body,
+                tuple(groove_a), tuple(groove_b),
+                tuple(anchor_b)),
             cp.cpConstraintFree)
         self._set_bodies(a,b)
 
@@ -357,7 +357,7 @@ class DampedSpring(Constraint):
         """
         c = cp.cpDampedSpringNew(
             a._body, b._body,
-            tuple(anchor_a), tuple(anchor_b), 
+            tuple(anchor_a), tuple(anchor_b),
             rest_length, stiffness, damping)
         self._constraint = ffi.gc(c, cp.cpConstraintFree)
         self._set_bodies(a,b)
@@ -394,6 +394,30 @@ class DampedSpring(Constraint):
         cp.cpDampedSpringSetDamping(self._constraint, damping)
     damping = property(_get_damping, _set_damping,
         doc="""How soft to make the damping of the spring.""")
+
+class Gravitation(Constraint):
+    """Graviation force"""
+
+    _pickle_attrs_init = ['anchor_a', 'anchor_b', 'gravitationCoef']
+
+    def __init__(self, a, b, gravitationCoef=6.67408e-11):
+        """Defined much like a slide joint.
+
+        :param Body a: Body a
+        :param Body b: Body b
+        :param float gravitationCoef: Gravitational constant
+        """
+        c = cp.cpGravitationNew(
+            a._body, b._body, gravitationCoef)
+        self._constraint = ffi.gc(c, cp.cpConstraintFree)
+        self._set_bodies(a,b)
+
+    def _get_gravitationCoef(self):
+        return cp.cpGravitationGetCoef(self._constraint)
+    def _set_gravitationCoef(self, gravitationCoef):
+        cp.cpGravitationSetCoef(self._constraint, gravitationCoef)
+    gravitationCoef = property(_get_gravitationCoef, _set_gravitationCoef,
+        doc="""Gravitational Constant.""")
 
 class DampedRotarySpring(Constraint):
     """Like a damped spring, but works in an angular fashion"""

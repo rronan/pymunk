@@ -86,6 +86,7 @@ CP_EXPORT cpFloat cpConstraintGetImpulse(cpConstraint *constraint);
 #include "cpPivotJoint.h"
 #include "cpGrooveJoint.h"
 #include "cpDampedSpring.h"
+#include "cpGravitation.h"
 #include "cpDampedRotarySpring.h"
 #include "cpRotaryLimitJoint.h"
 #include "cpRatchetJoint.h"
