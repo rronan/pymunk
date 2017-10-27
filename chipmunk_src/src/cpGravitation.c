@@ -43,13 +43,13 @@ applyImpulse(cpGravitation *gravity, cpFloat dt)
 	cpFloat dist = cpvlength(delta);
 	cpVect n = cpvmult(delta, 1.0f/(dist ? dist : INFINITY));
 
-    cpFloat j = gravity->gravitationForceFunc((cpConstraint *)gravity, dist)*dt;
-    gravity->jAcc = j;
-    cpVect njAcc = cpvmult(n, j);
+	cpFloat j = gravity->gravitationForceFunc((cpConstraint *)gravity, dist)*dt;
+	gravity->jAcc = j;
+	cpVect njAcc = cpvmult(n, j);
 
-    // apply_impulses(a, b, gravity->r1, gravity->r2, njAcc);
-    a->v = cpvadd(a->v, cpvmult(cpvneg(njAcc), a->m_inv));
-    b->v = cpvadd(b->v, cpvmult(njAcc, b->m_inv));
+	// apply_impulses(a, b, gravity->r1, gravity->r2, njAcc);
+	a->v = cpvadd(a->v, cpvmult(cpvneg(njAcc), a->m_inv));
+	b->v = cpvadd(b->v, cpvmult(njAcc, b->m_inv));
 }
 
 static cpFloat
